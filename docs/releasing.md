@@ -3,7 +3,8 @@
 The repository builds version 0.1.0 as a wheel and source distribution. Before a
 public release, verify availability/ownership of the normalized name `rce-path`
 on PyPI and TestPyPI. Configure the repository URL in project metadata after the
-actual GitHub repository exists. The local project currently has no Git remote.
+actual GitHub repository exists. The publishing workflow lives in
+`.github/workflows/publish.yml`.
 
 ```bash
 python -m pip install -e ".[dev]"
@@ -17,7 +18,7 @@ python -m twine check dist/*
 Install the built wheel in a fresh environment and run `rce-path --version` and
 `rce-path scan --help`. Run `python scripts/check_install.py` with that environment's
 Python for an offline CLI, metadata, typed-marker, and non-execution smoke test.
-CI tests Linux and Windows on Python 3.11–3.14. The labeled
+CI runs one Ubuntu job on Python 3.13 for branch pushes and pull requests. The labeled
 fixture gate checks all supported classifications, sink spans, safe controls,
 top-level non-execution, and limits. Provider tests run without external access.
 
@@ -45,3 +46,18 @@ For GitHub/PyPI trusted publishing:
 
 The workflow is present but needs a GitHub repository and PyPI publisher setup.
 Use a new version for each upload; PyPI does not allow overwriting a release.
+
+After configuring the publisher, commit and push your changes, then publish 0.1.0:
+
+```bash
+git push origin main
+git tag rce-path-v0.1.0
+git push origin rce-path-v0.1.0
+```
+
+A normal branch push runs CI; publishing runs on `rce-path-v*` tags. The tag's
+version must match `pyproject.toml`. Alternatively, open GitHub Actions, select
+**Publish to PyPI**, and use **Run workflow** to publish the version from your
+selected branch. The manual button appears once the workflow is on the default
+branch. Both release paths run validation before uploading and honor the `pypi`
+environment's approval rules. Branch pushes do not upload to PyPI.

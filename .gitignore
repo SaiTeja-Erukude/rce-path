@@ -12,3 +12,4 @@ htmlcov/
 .rce-path-cache/
 .test-runs/
 .smoke-venv/
+.validation-ci/

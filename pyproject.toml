@@ -56,3 +56,8 @@ select = ["E4", "E7", "E9", "F", "I", "UP"]
 python_version = "3.11"
 files = ["src/rce_path"]
 check_untyped_defs = true
+
+[[tool.mypy.overrides]]
+# The static/dev installation intentionally excludes these optional AI SDKs.
+module = ["openai.*", "ollama.*"]
+ignore_missing_imports = true

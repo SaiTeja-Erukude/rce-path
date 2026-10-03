@@ -32,7 +32,7 @@ class OllamaProvider(BaseProvider):
         client = self.client
         deadline = time.monotonic() + timeout
         if client is None:
-            from ollama import Client  # type: ignore[import-not-found]
+            from ollama import Client
 
             client = Client(
                 host=config.endpoint or "http://127.0.0.1:11434",

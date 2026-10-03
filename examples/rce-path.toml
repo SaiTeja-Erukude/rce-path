@@ -1,0 +1,23 @@
+[scan]
+rules = ["python.eval", "python.exec", "os.system", "os.popen", "subprocess.shell"]
+excludes = [".git", ".venv", "venv", "__pycache__", "build", "dist", "node_modules", "site-packages"]
+max_file_bytes = 1000000
+max_files = 10000
+parser_timeout_seconds = 10.0
+parser_memory_mb = 256
+scan_timeout_seconds = 120.0
+max_ast_nodes = 30000
+max_flow_steps = 20000
+loop_iterations = 8
+max_evidence_steps = 64
+
+[ai]
+provider = "ollama"
+model = "YOUR_MODEL"
+timeout_seconds = 30.0
+max_reviews = 20
+max_input_bytes = 16000
+max_output_tokens = 1024
+total_token_budget = 50000
+# Runtime --ai is required. Endpoint settings require explicit acceptance.
+# endpoint = "http://127.0.0.1:11434"

@@ -1,0 +1,58 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "rce-path"
+version = "0.1.0"
+description = "Local-first, evidence-backed Python execution-path investigation"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{name = "Sai Teja Erukude"}]
+requires-python = ">=3.11"
+keywords = ["security", "static-analysis", "dataflow", "rce", "audit"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Security",
+  "Typing :: Typed",
+]
+dependencies = ["pydantic>=2.7,<3"]
+
+[project.optional-dependencies]
+openai = ["openai>=1.68,<3"]
+ollama = ["ollama>=0.4.7,<1"]
+ai = ["openai>=1.68,<3", "ollama>=0.4.7,<1"]
+dev = ["pytest>=8,<10", "build>=1.2", "twine>=6", "ruff>=0.11", "mypy>=1.15"]
+
+[project.scripts]
+rce-path = "rce_path.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/rce_path"]
+
+[tool.hatch.build.targets.sdist]
+include = ["/src", "/tests", "/docs", "/examples", "/scripts", "/README.md", "/LICENSE", "/pyproject.toml", "/rce-path_spec.md", "/.github", "/CONTRIBUTING.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "--import-mode=importlib"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "UP"]
+
+[tool.mypy]
+python_version = "3.11"
+files = ["src/rce_path"]
+check_untyped_defs = true
